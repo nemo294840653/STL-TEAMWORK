@@ -71,26 +71,26 @@ public:
 	node<T>* insertAsLast(T const&);
 	node<T> *insertafter(node<T> *p, int value);
 	node<T> *insertbefore(node<T> *p, int value);
-	node<T>* find(T & e, int n, node<T>* p);  //查找以结点p结尾的倒数前n个结点中是否有元素e
+	node<T>* find(T & e, int n, node<T>* p);  							//查找以结点p结尾的倒数前n个结点中是否有元素e
 	node<T>* search(T const&);
 	node<T>* search(T const& e, int n, node<T>* p);
-	tiny_list();
+	tiny_list();							  							//构造函数
 	tiny_list(int n);
 	tiny_list(int num, T value);
 	tiny_list(tiny_list<T> const &obj);
 	tiny_list(const tiny_list<T> &L, int r, int n);
 	~tiny_list();
 	int size() { return _size; }
-	bool empty() { return (_size == 0); }   //判断是否为空表
+	bool empty() { return (_size == 0); }    							//判断是否为空表
 	bool valid(node<T>* p) { return p && (p != head) && (p!= tail); }   //判断结点是否有效
-	void insertsort(node<T>* p, int n);   //插入排序
-	void selectsort(node<T>* p, int n);   //选择排序
-	node<T>* selectmax();  				  //选择list对象所有结点的最大值
+	void insertsort(node<T>* p, int n);   								//插入排序
+	void selectsort(node<T>* p, int n);   								//选择排序
+	node<T>* selectmax();  				  								//选择list对象所有结点的最大值
 	node<T>* selectmax(node<T> *p, int n); 
-	void reverse();   					  //使list中的元素翻转
-	void sort(node<T>* p, int n);   
-	void sort();     					  //排序，插入排序和选择排序随机
-	int uniquify(); 					  //使用时列表必须是已排序序列，使list中的元素唯一化,返回值代表删除多少个结点
+	void reverse();   					  								//使list中的元素翻转
+	void sort(node<T>* p, int n,int i);   
+	void sort(int i);     					 							//排序，插入排序和选择排序随机
+	int uniquify(); 					  								//使用时列表必须是已排序序列，使list中的元素唯一化,返回值代表删除多少个结点
 	void swap(tiny_list<T> &obj);
 private:
 	node<T>* head;
@@ -214,21 +214,21 @@ node<T>* tiny_list<T>::insertAsFirst(T const& e) {
 	_size++;
 	return head->insertAsnext(e);
 }
-/*************在列表尾部插入元素(会重新分配内存)*********************/
+//在列表尾部插入元素(会重新分配内存)
 template <typename T>
 node<T>* tiny_list<T>::insertAsLast(T const& e) {
 	cout << "insertAsLast" <<e<< endl;
 	_size++;
 	return tail->insertAsPred(e);
 }
-/*************在某个结点后插入元素(会重新分配内存)*********************/
+//在某个结点后插入元素(会重新分配内存)
 template <typename T>
 node<T> *tiny_list<T>::insertafter(node<T> *p, int value)
 {
 	_size++;
 	return p->insertAsnext(value);
 }
-/*************在某个结点前插入元素(会重新分配内存)*********************/
+//在某个结点前插入元素(会重新分配内存)
 template <typename T>
 node<T> *tiny_list<T>::insertbefore(node<T> *p, int value)
 {
@@ -240,7 +240,7 @@ node<T>* tiny_list<T>::search(T const& e)
 {
 	return search(e, _size,tail);
 }
-/****查找结点p前n个结点中是第一个小于待查找的元素，若找到返回结点*******/
+//查找结点p前n个结点中是第一个小于待查找的元素，若找到返回结点
 template <typename T>
 node<T>* tiny_list<T>::search(T const& e, int n, node<T>* p)
 {
@@ -251,7 +251,7 @@ node<T>* tiny_list<T>::search(T const& e, int n, node<T>* p)
 	}
 	return p;
 }
-/******查找结点p前n个结点中是否存在待查找元素，若找到返回结点***********/
+//查找结点p前n个结点中是否存在待查找元素，若找到返回结点
 template <typename T>
 node<T>* tiny_list<T>::find(T & e, int n, node<T>* p)
 {
@@ -261,12 +261,12 @@ node<T>* tiny_list<T>::find(T & e, int n, node<T>* p)
 		return nullptr;
 	}
 }
-/****************排序方法进行选择*********************************/
+//排序方法进行选择
 template <typename T>
-void tiny_list<T>::sort(node<T>* p, int n)
+void tiny_list<T>::sort(node<T>* p, int n, int i)
 {
-	srand((unsigned int)time(0));
-	int num = rand() % 2;
+	//srand((unsigned int)time(0));
+	int num = i;
 	switch (num)
 	{
 	case 1:insertsort(p, n); break;
@@ -276,7 +276,7 @@ void tiny_list<T>::sort(node<T>* p, int n)
 	}
 	
 }
-/**********************插入排序*****************************/
+//插入排序
 template <typename T>
 void tiny_list<T>::insertsort(node<T>* p, int n)
 {
@@ -288,7 +288,7 @@ void tiny_list<T>::insertsort(node<T>* p, int n)
 			remove(p->pre);
 		}
 }
-/****************************选择排序*************************/
+//选择排序
 template <typename T>
 void tiny_list<T>::selectsort(node<T>* p, int n)
 {
@@ -306,12 +306,12 @@ void tiny_list<T>::selectsort(node<T>* p, int n)
 	}
 }
 template <typename T>
-void tiny_list<T>::sort()
+void tiny_list<T>::sort(int i)
 {
 	cout << _size << endl;
-	sort(first(), _size);
+	sort(first(), _size,i);
 }
-/**********返回列表中某个结点之后n个结点的最大结点**************/
+//返回列表中某个结点之后n个结点的最大结点
 template <typename T>
 node<T>* tiny_list<T>::selectmax(node<T> *p, int n)
 {
@@ -320,13 +320,13 @@ node<T>* tiny_list<T>::selectmax(node<T> *p, int n)
 		if (((cur = cur->next)->value) > max->value)  max = cur;
 	return max;
 }
-/****************返回列表的最大结点*****************************/
+//返回列表的最大结点
 template <typename T>
 node<T>* tiny_list<T>::selectmax()
 {
 	return selectmax(first(),_size);
 }
-/****************将列表中的元素翻转******************************/
+//将列表中的元素翻转
 template <typename T>
 void tiny_list<T>::reverse()
 {
@@ -338,7 +338,7 @@ void tiny_list<T>::reverse()
 		headtemp = headtemp->next;
 	}
 }
-/****去除列表中重复出现的结点，只保留一个，并返回删除结点个数****/
+//去除列表中重复出现的结点，只保留一个，并返回删除结点个数
 template <typename T>
 int tiny_list<T>::uniquify()
 {
@@ -353,7 +353,7 @@ int tiny_list<T>::uniquify()
 	}
 	return oldsize - _size;
 }
-/*******************将两个对象的值进行对调************************/
+//将两个对象的值进行对调
 template <typename T>
 void tiny_list<T>::swap(tiny_list<T> &obj)
 {
